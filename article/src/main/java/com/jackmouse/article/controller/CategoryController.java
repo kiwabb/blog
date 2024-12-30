@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.jackmouse.article.entity.Article;
-import com.jackmouse.article.service.ArticleService;
+import com.jackmouse.article.entity.Category;
+import com.jackmouse.article.service.CategoryService;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -19,24 +19,24 @@ import java.util.List;
  *  控制层。
  *
  * @author zhoujiaangyao
- * @since 2024-11-15
+ * @since 2024-12-30
  */
 @RestController
-@RequestMapping("/public/v1/article/article")
-public class ArticleController {
+@RequestMapping("/public/v1/article/category")
+public class CategoryController {
 
     @Autowired
-    private ArticleService articleService;
+    private CategoryService categoryService;
 
     /**
      * 添加。
      *
-     * @param article 
+     * @param category 
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    public Result<Boolean> save(@RequestBody Article article) {
-        return Result.succeed(articleService.save(article));
+    public Result<Boolean> save(@RequestBody Category category) {
+        return Result.succeed(categoryService.save(category));
     }
 
     /**
@@ -47,18 +47,18 @@ public class ArticleController {
      */
     @DeleteMapping("remove/{id}")
     public Result<Boolean> remove(@PathVariable Long id) {
-        return Result.succeed(articleService.removeById(id));
+        return Result.succeed(categoryService.removeById(id));
     }
 
     /**
      * 根据主键更新。
      *
-     * @param article 
+     * @param category 
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    public Result<Boolean> update(@RequestBody Article article) {
-        return Result.succeed(articleService.updateById(article));
+    public Result<Boolean> update(@RequestBody Category category) {
+        return Result.succeed(categoryService.updateById(category));
     }
 
     /**
@@ -67,8 +67,8 @@ public class ArticleController {
      * @return 所有数据
      */
     @GetMapping("list")
-    public Result<List<Article>> list() {
-        return Result.succeed(articleService.list());
+    public Result<List<Category>> list() {
+        return Result.succeed(categoryService.list());
     }
 
     /**
@@ -78,8 +78,8 @@ public class ArticleController {
      * @return 详情
      */
     @GetMapping("getInfo/{id}")
-    public Result<Article> getInfo(@PathVariable Long id) {
-        return Result.succeed(articleService.getById(id));
+    public Result<Category> getInfo(@PathVariable Long id) {
+        return Result.succeed(categoryService.getById(id));
     }
 
     /**
@@ -89,8 +89,8 @@ public class ArticleController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public Result<Page<Article>> page(Page<Article> page) {
-        return Result.succeed(articleService.page(page));
+    public Result<Page<Category>> page(Page<Category> page) {
+        return Result.succeed(categoryService.page(page));
     }
 
 }
