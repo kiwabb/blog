@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackmouse.article.mapper.ArticleMapper">
+
+    <resultMap id="articlePreviewResultMap" type="com.jackmouse.article.dto.ArticlePreviewDTO">
+        <id column="id" property="id"/>
+        <result column="nickname" property="nickname"/>
+        <result column="article_cover" property="articleCover"/>
+        <result column="article_title" property="articleTitle"/>
+        <result column="create_time" property="createTime"/>
+        <association property="categoryEntity" javaType="com.jackmouse.article.entity.Category">
+            <id column="category_id" property="id"/>
+            <result column="category_name" property="categoryName"/>
+        </association>
+        <collection property="tagDTOList" ofType="com.jackmouse.article.entity.Tag">
+            <id column="tag_id" property="id"/>
+            <result column="tag_name" property="tagName"/>
+        </collection>
+    </resultMap>
+
+
+    <select id="querySortCategoryArticles" resultMap="articlePreviewResultMap">
+        SELECT
+            a.id, a.user_id, a.article_cover, a.article_title,
+            a.create_time, c.id category_id, c.category_name, t.id tag_id, t.tag_name from (
+                  SELECT
+                      id, category_name
+                  FROM
+                      tb_category
+                  WHERE
+                      delete_flag = 0
+                  order by
+                      sort
+                      LIMIT 3
+              ) c
+                  LEFT join (
+            SELECT
+                *,
+                ROW_NUMBER() OVER (PARTITION BY category_id ORDER BY create_time DESC) AS rn
+            FROM
+                tb_article
+        ) a on c.id = a.category_id
+                                                                                                                                                  left join tb_article_tag atg on a.id = atg.article_id
+                                                                                                                                                  left join tb_tag t on atg.tag_id = t.id
+        WHERE
+            a.rn &lt;= 6
+    </select>
+
+    <select id="queryRecommendArticles" resultMap="articlePreviewResultMap">
+        select a.id, a.user_id, a.article_cover, a.article_title, a.create_time, a.category_id, c.category_name, t.id, t.tag_name
+        from tb_article a
+                 left join tb_category c on a.category_id = c.id
+                 left join tb_article_tag atg on a.id = atg.article_id
+                 left join tb_tag t on atg.tag_id = t.id
+        where a.is_top = 1 and a.delete_flag = 0
+            LIMIT 6
+    </select>
+
+</mapper>
