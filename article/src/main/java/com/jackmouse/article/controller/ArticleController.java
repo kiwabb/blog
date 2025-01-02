@@ -1,6 +1,7 @@
 package com.jackmouse.article.controller;
 
 import com.jackmouse.article.dto.ArticlePreviewDTO;
+import com.jackmouse.article.vo.ArticleSaveVO;
 import com.jackmouse.common.model.Result;
 import com.mybatisflex.core.paginate.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,7 +25,7 @@ import java.util.Map;
  * @since 2024-12-30
  */
 @RestController
-@RequestMapping("/public/v1/article/article")
+@RequestMapping("/v1/article/article")
 public class ArticleController {
 
     @Autowired
@@ -46,8 +47,8 @@ public class ArticleController {
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    public Result<Boolean> save(@RequestBody Article article) {
-        return Result.succeed(articleService.save(article));
+    public Result<Boolean> save(@RequestBody ArticleSaveVO article) {
+        return Result.succeed(articleService.saveArticle(article));
     }
 
     /**

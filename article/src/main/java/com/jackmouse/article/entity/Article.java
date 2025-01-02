@@ -60,20 +60,20 @@ public class Article extends BaseEntity implements Serializable {
     /**
      * 文章内容
      */
-    private byte[] articleContent;
+    private String articleContent;
 
     /**
      * 是否置顶（0否，1是）
      */
-    private Boolean isTop;
+    private Integer isTop;
 
     /**
      * 是否发布（0否，1是）
      */
-    private Boolean isDraft;
+    private Integer isDraft;
 
     /**
-     * 状态
+     * 状态 0 待审批 1 已发布 2 已下架
      */
     private String status;
 

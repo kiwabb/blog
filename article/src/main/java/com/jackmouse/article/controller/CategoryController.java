@@ -22,11 +22,20 @@ import java.util.List;
  * @since 2024-12-30
  */
 @RestController
-@RequestMapping("/public/v1/article/category")
+@RequestMapping("/v1/article/category")
 public class CategoryController {
 
     @Autowired
     private CategoryService categoryService;
+
+    /**
+     * 获取主页分类显示信息
+     * @return 主页分类显示信息
+     */
+    @GetMapping("/sortInfo")
+    public Result<List<Category>> querySortInfo() {
+        return Result.succeed(categoryService.querySortInfo());
+    }
 
     /**
      * 添加。

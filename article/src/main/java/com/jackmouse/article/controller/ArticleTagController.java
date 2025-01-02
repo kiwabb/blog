@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
-import com.jackmouse.article.entity.Tag;
-import com.jackmouse.article.service.TagService;
+import com.jackmouse.article.entity.ArticleTag;
+import com.jackmouse.article.service.ArticleTagService;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
@@ -19,24 +19,24 @@ import java.util.List;
  *  控制层。
  *
  * @author zhoujiaangyao
- * @since 2024-12-30
+ * @since 2025-01-02
  */
 @RestController
-@RequestMapping("/v1/article/tag")
-public class TagController {
+@RequestMapping("/articleTag")
+public class ArticleTagController {
 
     @Autowired
-    private TagService tagService;
+    private ArticleTagService articleTagService;
 
     /**
      * 添加。
      *
-     * @param tag 
+     * @param articleTag 
      * @return {@code true} 添加成功，{@code false} 添加失败
      */
     @PostMapping("save")
-    public Result<Boolean> save(@RequestBody Tag tag) {
-        return Result.succeed(tagService.save(tag));
+    public Result<Boolean> save(@RequestBody ArticleTag articleTag) {
+        return Result.succeed(articleTagService.save(articleTag));
     }
 
     /**
@@ -47,18 +47,18 @@ public class TagController {
      */
     @DeleteMapping("remove/{id}")
     public Result<Boolean> remove(@PathVariable Long id) {
-        return Result.succeed(tagService.removeById(id));
+        return Result.succeed(articleTagService.removeById(id));
     }
 
     /**
      * 根据主键更新。
      *
-     * @param tag 
+     * @param articleTag 
      * @return {@code true} 更新成功，{@code false} 更新失败
      */
     @PutMapping("update")
-    public Result<Boolean> update(@RequestBody Tag tag) {
-        return Result.succeed(tagService.updateById(tag));
+    public Result<Boolean> update(@RequestBody ArticleTag articleTag) {
+        return Result.succeed(articleTagService.updateById(articleTag));
     }
 
     /**
@@ -67,8 +67,8 @@ public class TagController {
      * @return 所有数据
      */
     @GetMapping("list")
-    public Result<List<Tag>> list() {
-        return Result.succeed(tagService.list());
+    public Result<List<ArticleTag>> list() {
+        return Result.succeed(articleTagService.list());
     }
 
     /**
@@ -78,8 +78,8 @@ public class TagController {
      * @return 详情
      */
     @GetMapping("getInfo/{id}")
-    public Result<Tag> getInfo(@PathVariable Long id) {
-        return Result.succeed(tagService.getById(id));
+    public Result<ArticleTag> getInfo(@PathVariable Long id) {
+        return Result.succeed(articleTagService.getById(id));
     }
 
     /**
@@ -89,8 +89,8 @@ public class TagController {
      * @return 分页对象
      */
     @GetMapping("page")
-    public Result<Page<Tag>> page(Page<Tag> page) {
-        return Result.succeed(tagService.page(page));
+    public Result<Page<ArticleTag>> page(Page<ArticleTag> page) {
+        return Result.succeed(articleTagService.page(page));
     }
 
 }
