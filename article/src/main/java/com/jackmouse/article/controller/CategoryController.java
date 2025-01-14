@@ -34,6 +34,7 @@ public class CategoryController {
      */
     @GetMapping("/sortInfo")
     public Result<List<Category>> querySortInfo() {
+        int i;
         return Result.succeed(categoryService.querySortInfo());
     }
 
